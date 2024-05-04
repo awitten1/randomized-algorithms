@@ -1,2 +1,2 @@
-add_library(rand INTERFACE)
-target_include_directories(rand INTERFACE ${CMAKE_CURRENT_LIST_DIR})
+add_library(utils INTERFACE)
+target_include_directories(utils INTERFACE ${CMAKE_CURRENT_LIST_DIR})

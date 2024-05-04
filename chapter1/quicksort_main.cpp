@@ -1,7 +1,8 @@
 #include "quicksort.h"
-#include "rand.h"
+// #include "rand.h"
 
 #include <algorithm>
+#include <cstdlib>
 #include <iostream>
 #include <benchmark/benchmark.h>
 
@@ -14,6 +15,7 @@ static void BM_Quicksort(benchmark::State& state) {
     state.PauseTiming();
     if (!std::is_sorted(vec.begin(), vec.end())) {
       std::cerr << "Uh oh! Not sorted!" << std::endl;
+      std::abort();
     }
     state.ResumeTiming();
   }

@@ -1,11 +1,14 @@
+#pragma once
+
 #include <random>
 #include <vector>
 
 namespace utils {
 
-template<typename T>
+// mt19937 is super slow
+template<typename T, typename Rand = std::minstd_rand>
 auto uniform(T low, T high) {
-  static std::mt19937 rng(std::random_device{}());
+  static Rand rng(std::random_device{}());
   std::uniform_int_distribution dist(low, high);
   return dist(rng);
 }
