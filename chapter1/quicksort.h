@@ -11,9 +11,7 @@
 template<typename It>
 static auto partition(It curr, It end) {
   using it_diff = std::iterator_traits<It>::difference_type;
-
-  // rand() seems to be much faster
-  auto pivot = utils::uniform<it_diff>(0, end - curr - 1);
+  auto pivot = utils::random::uniform<it_diff>(0, end - curr - 1);
   std::swap(*(end - 1), *(curr + pivot));
 
   It begin_copy = curr;

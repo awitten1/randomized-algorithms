@@ -9,7 +9,7 @@
 static void BM_Quicksort(benchmark::State& state) {
   for (auto _ : state) {
     state.PauseTiming();
-    auto vec = utils::uniform_int_vec(1000000);
+    auto vec = utils::random::uniform_int_vec(1000000);
     state.ResumeTiming();
     quicksort(&vec);
     state.PauseTiming();
@@ -23,10 +23,9 @@ static void BM_Quicksort(benchmark::State& state) {
 BENCHMARK(BM_Quicksort);
 
 static void BM_StdSort(benchmark::State& state) {
-  std::string x = "hello";
   for (auto _ : state) {
     state.PauseTiming();
-    auto vec = utils::uniform_int_vec(1000000);
+    auto vec = utils::random::uniform_int_vec(1000000);
     state.ResumeTiming();
     std::sort(vec.begin(), vec.end());
   }
