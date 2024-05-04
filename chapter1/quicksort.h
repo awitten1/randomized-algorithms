@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <vector>
 #include <cassert>
+#include <iostream>
 
 template<typename It>
 static auto partition(It curr, It end) {
@@ -31,14 +32,4 @@ static void quicksort(It begin, It end) {
 template<typename T>
 void quicksort(std::vector<T>* out) {
   quicksort(out->begin(), out->end());
-}
-
-int main() {
-  for (int i = 0; i < 10; ++i) {
-    std::vector<int> x(100);
-    std::generate(x.begin(), x.end(), []() { return rand() % 15; });
-    quicksort(&x);
-    assert(std::is_sorted(x.begin(), x.end()));
-  }
-  return 0;
 }
