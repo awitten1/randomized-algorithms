@@ -25,6 +25,22 @@ static auto partition(It curr, It end) {
   return begin_copy;
 }
 
+// How many comparisons executed for quicksort?
+//
+// Take two random elements: the ith and jth smallest.
+// What is the probability the are compared?  If any element in between
+// them is picked as the pivot before on of the two are picked,
+// then the two elements are split up and never compared.
+//
+// If either of those two elements are picked as pivot first, then they are compared.
+// The probability that one of those two elements is picked before anything in between them
+// is 2 / (j - i + 1).
+//
+// Xij - 1 if elements i and j are compared, 0 otherwise
+// total comparisons = E[sum_{i < j} Xij] = sum_{i < j} E[Xij] = 2 * sum_{i < j} 1 / (j - i + 1)
+//                   = 2 * sum_{i = 1}^n sum_{j = i + 1}^n 1 / (j - i + 1)
+//                   = 2 * sum_{i = 1}^n sum_{j = 2}^(n - i + 1) 1 / k
+//                   <=  2 * sum_{i = 1}^n sum_{j = 1}^n 1 / j <= 2nlog(n)
 template<typename It>
 static void quicksort(It begin, It end) {
   if (end - begin > 1) {
