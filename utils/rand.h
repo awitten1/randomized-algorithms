@@ -6,7 +6,7 @@
 namespace utils {
 
 // mt19937 is super slow
-template<typename T, typename Rand = std::minstd_rand>
+template<typename T, typename Rand = std::ranlux24_base>
 auto uniform(T low, T high) {
   static Rand rng(std::random_device{}());
   std::uniform_int_distribution dist(low, high);
