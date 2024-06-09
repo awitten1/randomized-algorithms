@@ -8,5 +8,5 @@ target_link_libraries(quicksort_bench PRIVATE benchmark::benchmark)
 target_link_libraries(quicksort_bench PRIVATE chapter1)
 
 if (LINUX)
-  target_link_libraries(quicksort_bench perf)
+  target_link_libraries(quicksort_bench PRIVATE perf)
 endif()

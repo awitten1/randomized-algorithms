@@ -1,5 +1,32 @@
 
 #include "perf.h"
+#include <chrono>
+#include <mutex>
+
+using namespace std::literals;
+
+void PerfEvents::start() {
+  t_ = std::thread([this]() {
+    for(;;) {
+      std::unique_lock<std::mutex> lk(m_);
+      cv_.wait_for(lk, 1s, []() {
+        return shutdown_;
+      });
+      if (shutdown_) {
+        break;
+      }
+      int64_t cycles = poll();
+      std::cout << cycles << std::endl;
+    }
+  });
+
+}
+
+void PerfEvents::shutdown() {
+  std::lock_guard<std::mutex> lk(m_);
+  shutdown_ = true;
+  cv_.notify_one();
+}
 
 PerfEvents::PerfEvents() {
     // pid = 0 => current process, cpu == -1 => any cpu
@@ -19,8 +46,6 @@ PerfEvents::PerfEvents() {
 
     // for now disable this
     // attr.read_format = PERF_FORMAT_GROUP;
-
-    uint64_t event_id;
 
     pid_t pid = 0;
     int cpu = -1;
