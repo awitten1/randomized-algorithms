@@ -1,5 +1,8 @@
 #include "quicksort.h"
-// #include "rand.h"
+
+#if defined(__linux__)
+#include "perf.h"
+#endif
 
 #include <algorithm>
 #include <cstdlib>
@@ -10,6 +13,11 @@ static void BM_Quicksort(benchmark::State& state) {
   for (auto _ : state) {
     state.PauseTiming();
     auto vec = utils::random::uniform_int_vec(1000000);
+
+#if defined (__linux__)
+    PerfEvents perf_events;
+#endif
+
     state.ResumeTiming();
     quicksort(&vec);
     state.PauseTiming();
