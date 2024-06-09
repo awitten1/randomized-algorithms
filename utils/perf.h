@@ -59,7 +59,7 @@ public:
         ioctl(fd_, PERF_EVENT_IOC_RESET, 0);
 
         // enable the counter.
-        ioctl(fd, PERF_EVENT_IOC_ENABLE, 0);
+        ioctl(fd_, PERF_EVENT_IOC_ENABLE, 0);
     }
 
     int64_t poll() {
