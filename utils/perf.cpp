@@ -2,6 +2,8 @@
 #include "perf.h"
 #include <chrono>
 #include <mutex>
+#include <iostream>
+#include <sstream>
 
 using namespace std::literals;
 
@@ -9,7 +11,7 @@ void PerfEvents::start() {
   t_ = std::thread([this]() {
     for(;;) {
       std::unique_lock<std::mutex> lk(m_);
-      cv_.wait_for(lk, 1s, []() {
+      cv_.wait_for(lk, 1s, [this]() {
         return shutdown_;
       });
       if (shutdown_) {
@@ -55,7 +57,9 @@ PerfEvents::PerfEvents() {
                 pid, cpu, group_fd, 0);
 
     if (fd_ < 0) {
-        throw std::runtime_error{"perf_event_open returned an error"};
+        std::stringstream ss;
+        ss << "perf_event_open returned an error: " << strerror(errno);
+        throw std::runtime_error{ss.str()};
     }
 
     // reset the counter.

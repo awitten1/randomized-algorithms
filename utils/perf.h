@@ -21,12 +21,13 @@ public:
 
     int64_t poll() {
       int64_t count;
-      read(fd_, &count, sizeof(count));
+      (void)read(fd_, &count, sizeof(count));
       return count;
     }
 
     ~PerfEvents() {
       close(fd_);
+      shutdown();
       t_.join();
     }
 private:

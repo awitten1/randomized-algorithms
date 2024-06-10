@@ -16,6 +16,8 @@ static void BM_Quicksort(benchmark::State& state) {
 
 #if defined (__linux__)
     PerfEvents perf_events;
+    perf_events.start();
+    std::cout << "after start" << std::endl;
 #endif
 
     state.ResumeTiming();
